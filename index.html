@@ -195,6 +195,40 @@
     padding:10px 16px;border-radius:999px;box-shadow:0 10px 30px rgba(2,6,23,.35);display:none;max-width:calc(100% - 32px);text-align:center}
   .toast.show{display:block}
 
+  /* ---------- panel admin ---------- */
+  .tabs{display:flex;gap:6px;background:var(--soft);padding:5px;border-radius:14px;margin:14px 0 4px}
+  .tab{flex:1;border:0;background:transparent;padding:10px 8px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--ink2);cursor:pointer}
+  .tab.active{background:#fff;color:var(--blue);box-shadow:0 1px 4px rgba(15,23,42,.12)}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink2);margin-top:12px}
+  .check input{width:18px;height:18px;accent-color:var(--blue)}
+  #aList{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+  .aday{font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--blue);text-transform:uppercase;margin-top:6px}
+  .aitem{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+  .aitem.past{opacity:.6}
+  .aitem h4{margin:0;font-size:15px;font-weight:800}
+  .aitem .meta{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.5}
+  .aitem .meta b{color:var(--ink)}
+  .aact{display:flex;gap:6px;margin-top:4px}
+  .aact button{flex:1;border:1.5px solid var(--line);background:var(--soft);border-radius:10px;padding:8px 6px;font-weight:700;font-size:12.5px;color:var(--ink);cursor:pointer}
+  .aact button.del{color:var(--danger);border-color:#fecaca;background:#fef2f2}
+  .modal .card.form{text-align:left;max-height:calc(100dvh - 32px);overflow:auto}
+  .modal .card.form h1{text-align:center}
+  .field input[type=date],.field input[type=time],.field input[type=text],.field input[type=url],.field input[type=number]{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);
+    background:var(--soft);color:var(--ink);font-size:15px;font-weight:500;outline:none;font-family:inherit}
+  .field input:focus{border-color:var(--blue2);background:#fff}
+  .kgroup{border:1.5px solid var(--line);border-radius:14px;padding:10px;margin-top:8px}
+  .khead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:13px}
+  .khead button{border:0;background:#eff6ff;color:var(--blue);font-weight:700;font-size:12px;padding:6px 10px;border-radius:8px;cursor:pointer}
+  .kchips{display:flex;flex-wrap:wrap;gap:6px}
+  .kchip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:700;color:var(--ink2);cursor:pointer}
+  .kchip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .inline{display:flex;gap:8px}.inline input{flex:1;min-width:0}
+  .inline button{border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:0 14px;font-weight:700;color:var(--blue);cursor:pointer;white-space:nowrap}
+  .guide{font-size:13.5px;color:var(--ink2);line-height:1.6;margin-top:12px}
+  .guide ol{padding-left:20px;margin:8px 0}
+  .guide li{margin:4px 0}
+  .guide code{background:var(--soft);padding:1px 6px;border-radius:6px;font-size:12.5px;color:var(--ink)}
+
   @media (max-width:380px){ .brand-name{font-size:24px} #bar .chip.time{display:none} }
 </style>
 </head>
@@ -250,7 +284,7 @@
     </div>
     <div class="demo" id="demoNote"></div>
     <div class="foot">
-      <button class="link-btn" id="toSetup">Panel pengawas (ujian tanpa jadwal)</button><br>
+      <button class="link-btn" id="toSetup">Masuk Panel Admin</button><br>
       © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
     </div>
   </div>
@@ -278,6 +312,56 @@
       Tes suara alarm (2 detik)
     </button>
     <div class="foot">Jadwal diperbarui otomatis · <button class="link-btn" id="jRefresh">Muat ulang jadwal</button></div>
+  </div>
+</section>
+
+<!-- 0c. Panel admin -->
+<section id="admin" class="screen">
+  <div class="wrap">
+    <header class="brand">
+      <span class="logo" role="img" aria-label="Logo SMKN 1 Sungai Rumbai"></span>
+      <div>
+        <div class="brand-name">e-<span>Ngawas</span></div>
+        <div class="brand-school">SMKN 1 SUNGAI RUMBAI</div>
+        <div class="brand-tag">Panel Admin</div>
+      </div>
+    </header>
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h3M8 18h6"/></svg></div>
+        <div><h1>Panel Admin</h1><p class="sub">Kelola jadwal ujian semua kelas</p></div>
+      </div>
+      <div class="tabs">
+        <button class="tab active" type="button">Jadwal Ujian</button>
+        <button class="tab" type="button" id="tabCepat">Ujian Cepat (Link/QR)</button>
+      </div>
+      <div class="demo" id="aStatus"></div>
+      <div id="aSetup" hidden>
+        <div class="guide">
+          <b>Sambungkan ke Google Sheet (sekali saja):</b>
+          <ol>
+            <li>Buat Google Sheet baru di <code>sheets.new</code>, lalu buka <b>Ekstensi → Apps Script</b>.</li>
+            <li>Hapus isi editor, tempel kode dari tombol di bawah, lalu klik <b>Simpan</b>.</li>
+            <li>Klik <b>Terapkan → Deployment baru</b>, pilih jenis <b>Aplikasi web</b>. Jalankan sebagai <b>Saya</b>, akses <b>Siapa saja</b>, lalu <b>Terapkan</b> dan izinkan.</li>
+            <li>Salin <b>URL aplikasi web</b> (berakhiran <code>/exec</code>) dan isikan ke <code>API_URL</code> di file <code>index.html</code>. Cukup sekali.</li>
+          </ol>
+        </div>
+        <button class="btn btn-primary" id="copyGas" type="button">Salin kode Apps Script</button>
+      </div>
+      <div id="aBox" hidden>
+        <button class="btn btn-primary" id="aAdd" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Tambah Jadwal Ujian
+        </button>
+        <label class="check"><input type="checkbox" id="aPast"> Tampilkan jadwal yang sudah lewat</label>
+        <div id="aList"></div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="link-btn" id="aSandi" type="button">Ganti sandi admin</button> ·
+      <button class="link-btn" id="aKeluar" type="button">Keluar</button><br>
+      © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
+    </div>
   </div>
 </section>
 
@@ -340,7 +424,7 @@
       </div>
     </div>
     <div class="foot">
-      <button class="link-btn" id="setupHome">Kembali ke jadwal ujian</button><br>
+      <button class="link-btn" id="setupHome">Kembali ke panel admin</button><br>
       © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
     </div>
   </div>
@@ -502,6 +586,162 @@
   </div>
 </div>
 
+<!-- 10. Form jadwal -->
+<div class="modal" id="formModal">
+  <div class="card form">
+    <h1 id="fTitle">Tambah Jadwal</h1>
+    <div class="field"><label for="fMapel">Mata pelajaran</label><input id="fMapel" type="text" placeholder="Bahasa Indonesia" autocomplete="off"></div>
+    <div class="field"><label for="fTanggal">Tanggal</label><input id="fTanggal" type="date"></div>
+    <div class="row">
+      <div class="field"><label for="fMulai">Jam mulai</label><input id="fMulai" type="time"></div>
+      <div class="field"><label for="fSelesai">Jam selesai</label><input id="fSelesai" type="time"></div>
+    </div>
+    <div class="field"><label>Kelas peserta</label><div id="fKelas"></div></div>
+    <div class="field"><label for="fLink">Link soal (Google Form, dll)</label><input id="fLink" type="url" placeholder="https://docs.google.com/forms/..." autocomplete="off"></div>
+    <div class="row">
+      <div class="field"><label for="fPin">PIN pengawas</label>
+        <div class="inline"><input id="fPin" type="text" inputmode="numeric" autocomplete="off" placeholder="min. 4 digit"><button type="button" id="fPinAcak">Acak</button></div></div>
+      <div class="field" style="flex:.6"><label for="fBatas">Batas pelanggaran</label><input id="fBatas" type="number" min="1" max="20" value="3"></div>
+    </div>
+    <div class="err" id="fErr"></div>
+    <button class="btn btn-primary" id="fSimpan" type="button">Simpan Jadwal</button>
+    <button class="btn btn-ghost" id="fBatal" type="button">Batal</button>
+  </div>
+</div>
+
+<!-- 11. Hapus jadwal -->
+<div class="modal" id="delModal">
+  <div class="card">
+    <div class="big-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></div>
+    <h1>Hapus jadwal?</h1>
+    <p id="delMsg"></p>
+    <button class="btn btn-danger" id="delYes" type="button">Ya, hapus</button>
+    <button class="btn btn-ghost" id="delNo" type="button">Batal</button>
+  </div>
+</div>
+
+<!-- 12. Ganti sandi admin -->
+<div class="modal" id="sandiModal">
+  <div class="card form">
+    <h1>Ganti Sandi Admin</h1>
+    <div class="field"><label for="sBaru">Sandi baru</label><input id="sBaru" type="text" autocomplete="off" placeholder="min. 4 karakter"></div>
+    <div class="field"><label for="sUlang">Ulangi sandi baru</label><input id="sUlang" type="text" autocomplete="off"></div>
+    <div class="err" id="sErr"></div>
+    <button class="btn btn-primary" id="sSimpan" type="button">Simpan Sandi</button>
+    <button class="btn btn-ghost" id="sBatal" type="button">Batal</button>
+  </div>
+</div>
+
+<!-- Kode Apps Script untuk disalin admin -->
+<script type="text/plain" id="gasCode">/**
+ * e-Ngawas SMKN 1 Sungai Rumbai: penyimpanan jadwal ujian (Google Apps Script)
+ *
+ * Cara pasang (sekali saja):
+ * 1. Buat Google Sheet baru → Ekstensi → Apps Script.
+ * 2. Hapus isi Code.gs, tempel SELURUH kode ini, klik Simpan.
+ * 3. Terapkan → Deployment baru → Jenis: Aplikasi web
+ *      Jalankan sebagai : Saya
+ *      Yang memiliki akses: Siapa saja
+ *    → Terapkan → izinkan akses → salin "URL aplikasi web" (berakhiran /exec).
+ * 4. Tempel URL itu di PENGATURAN.API_URL pada index.html (sekali saja).
+ *
+ * Sandi admin awal: smksr (bisa diganti dari Panel Admin).
+ */
+var SHEET = 'Jadwal';
+var HEAD = ['ID', 'Tanggal', 'Mulai', 'Selesai', 'Kelas', 'Mapel', 'Link', 'PIN', 'Batas', 'Diubah'];
+
+function sheet_() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var s = ss.getSheetByName(SHEET);
+  if (!s) {
+    s = ss.insertSheet(SHEET);
+    s.getRange(1, 1, 1, HEAD.length).setValues([HEAD]).setFontWeight('bold');
+    s.setFrozenRows(1);
+    s.getRange('A:J').setNumberFormat('@');
+  }
+  return s;
+}
+
+function rows_() {
+  var v = sheet_().getDataRange().getDisplayValues();
+  return v.slice(1).filter(function (r) { return r[0]; }).map(function (r) {
+    return { id: r[0], tanggal: r[1], mulai: r[2], selesai: r[3], kelas: r[4],
+             mapel: r[5], link: r[6], pin: r[7], batas: Number(r[8]) || 3 };
+  });
+}
+
+function hash_(s) {
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, 'ua:' + s, Utilities.Charset.UTF_8)
+    .map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
+}
+
+function out_(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function sandi_() {
+  return PropertiesService.getScriptProperties().getProperty('SANDI_ADMIN') || 'smksr';
+}
+
+// Dibaca HP siswa: jadwal tanpa PIN asli (hanya hash-nya)
+function doGet(e) {
+  var rows = rows_().map(function (r) {
+    return { id: r.id, tanggal: r.tanggal, mulai: r.mulai, selesai: r.selesai, kelas: r.kelas,
+             mapel: r.mapel, link: r.link, pinHash: r.pin ? hash_(r.pin) : '', batas: r.batas };
+  });
+  return out_({ ok: true, rows: rows });
+}
+
+// Dipakai Panel Admin (wajib sandi)
+function doPost(e) {
+  var b = {};
+  try { b = JSON.parse(e.postData.contents); } catch (x) {}
+  if (String(b.pass || '') !== sandi_()) return out_({ ok: false, error: 'Sandi salah.' });
+  var lock = LockService.getScriptLock();
+  lock.waitLock(15000);
+  try {
+    switch (b.action) {
+      case 'login': return out_({ ok: true });
+      case 'list': return out_({ ok: true, rows: rows_() });
+      case 'save': return out_(save_(b.row || {}));
+      case 'delete': return out_(hapus_(b.id));
+      case 'sandi':
+        if (!b.baru || String(b.baru).length < 4) return out_({ ok: false, error: 'Sandi baru minimal 4 karakter.' });
+        PropertiesService.getScriptProperties().setProperty('SANDI_ADMIN', String(b.baru));
+        return out_({ ok: true });
+    }
+    return out_({ ok: false, error: 'Aksi tidak dikenal.' });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function save_(r) {
+  if (!r.tanggal || !r.mulai || !r.selesai || !r.kelas || !r.mapel || !r.link || !r.pin)
+    return { ok: false, error: 'Data jadwal belum lengkap.' };
+  var s = sheet_();
+  var id = r.id || Utilities.getUuid().slice(0, 8);
+  var vals = [id, r.tanggal, r.mulai, r.selesai, r.kelas, r.mapel, r.link, String(r.pin),
+              String(r.batas || 3), new Date().toISOString()];
+  var n = Math.max(s.getLastRow() - 1, 0);
+  var ids = n ? s.getRange(2, 1, n, 1).getDisplayValues().map(function (x) { return x[0]; }) : [];
+  var i = ids.indexOf(String(id));
+  var row = i >= 0 ? i + 2 : s.getLastRow() + 1;
+  s.getRange(row, 1, 1, HEAD.length).setNumberFormat('@').setValues([vals]);
+  return { ok: true, id: id };
+}
+
+function hapus_(id) {
+  var s = sheet_();
+  var n = Math.max(s.getLastRow() - 1, 0);
+  var ids = n ? s.getRange(2, 1, n, 1).getDisplayValues().map(function (x) { return x[0]; }) : [];
+  var i = ids.indexOf(String(id));
+  if (i < 0) return { ok: false, error: 'Jadwal tidak ditemukan.' };
+  s.deleteRow(i + 2);
+  return { ok: true };
+}
+</script>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -524,6 +764,8 @@ const PENGATURAN = {
     'XI': ['TITL A', 'TITL B', 'TOI A', 'TOI B', 'DPIB', 'TKP', 'TP', 'TPM', 'DGM', 'TELIN', 'TSM'],
     // 'XII': ['...'],
   },
+  // URL Aplikasi Web Google Apps Script (berakhiran /exec). Jadwal dikelola dari Panel Admin.
+  API_URL: 'https://script.google.com/macros/s/AKfycbxWFaCrrRQjPlmLDKK8yrWUtKJW7aAjK8ts-piH7WTE0glLNKQk5WOSXubbyRtPE9Ri1A/exec',
   JADWAL_SHEET: '',
   PIN_UTAMA: '',
   BATAS_PELANGGARAN: 3,
@@ -965,10 +1207,35 @@ const PENGATURAN = {
       row(besok, besok2, 'SEMUA', 'Pendidikan Pancasila'),
     ];
   }
+  // Jadwal dari Apps Script (JSON) → bentuk yang sama dengan hasil rapikan()
+  function dariApi(list){
+    return (list || []).map(o => {
+      const t = parseTanggal(o.tanggal), a = parseJam(o.mulai), b = parseJam(o.selesai);
+      if (!t || !a || !b || !o.link) return null;
+      const kelas = String(o.kelas || '').split(/[,;\n]/).map(up).filter(Boolean);
+      return { id: String(o.id), start: new Date(t[0], t[1]-1, t[2], a[0], a[1]), end: new Date(t[0], t[1]-1, t[2], b[0], b[1]),
+               jurusan: '', kelas: kelas.length ? kelas : ['SEMUA'], mapel: o.mapel || 'Ujian', link: o.link,
+               pin: '', pinHash: o.pinHash || '', batas: parseInt(o.batas) || PENGATURAN.BATAS_PELANGGARAN || 3 };
+    }).filter(Boolean).sort((x, y) => x.start - y.start);
+  }
   async function loadJadwal(){
     const url = sheetToCsvUrl(PENGATURAN.JADWAL_SHEET);
     let note = '';
-    if (!url) {
+    if (PENGATURAN.API_URL) {
+      try {
+        const res = await fetch(PENGATURAN.API_URL + (PENGATURAN.API_URL.includes('?') ? '&' : '?') + 'action=jadwal&_=' + Date.now(), { cache: 'no-store' });
+        const data = await res.json();
+        if (!data.ok) throw new Error(data.error || 'gagal');
+        J = dariApi(data.rows); jadwalSumber = 'api';
+        setLS(KEY_CACHE, { at: Date.now(), api: data.rows });
+      } catch(e) {
+        const c = getLS(KEY_CACHE, null);
+        if (c && c.api) { J = dariApi(c.api); jadwalSumber = 'cache';
+          note = `📶 Tidak bisa memuat jadwal terbaru. Menampilkan jadwal tersimpan (${new Date(c.at).toLocaleString('id-ID')}).`; }
+        else { J = []; jadwalSumber = '';
+          note = '❌ Jadwal gagal dimuat. Periksa koneksi internet lalu tekan "Muat ulang jadwal".'; }
+      }
+    } else if (!url) {
       J = rapikan(jadwalContoh()); jadwalSumber = 'contoh';
       note = '⚠️ Mode CONTOH: jadwal belum dihubungkan ke Google Sheet sekolah. Data di bawah hanya contoh (PIN 1234).';
     } else {
@@ -981,14 +1248,14 @@ const PENGATURAN = {
         setLS(KEY_CACHE, { at: Date.now(), txt });
       } catch(e) {
         const c = getLS(KEY_CACHE, null);
-        if (c) { J = rapikan(parseCSV(c.txt)); jadwalSumber = 'cache';
+        if (c && c.txt) { J = rapikan(parseCSV(c.txt)); jadwalSumber = 'cache';
           note = `📶 Tidak bisa memuat jadwal terbaru. Menampilkan jadwal tersimpan (${new Date(c.at).toLocaleString('id-ID')}).`; }
         else { J = []; jadwalSumber = '';
           note = '❌ Jadwal gagal dimuat. Periksa internet, atau pastikan Google Sheet sudah dibagikan "Siapa saja yang memiliki link".'; }
       }
     }
     $('demoNote').textContent = note; $('demoNote2').textContent = note;
-    await Promise.all(J.map(async r => { r.pinHash = r.pin ? await hash(r.pin) : ''; }));
+    await Promise.all(J.map(async r => { r.pinHash = r.pinHash || (r.pin ? await hash(r.pin) : ''); }));
     isiPilihan();
     if ($('jadwal').classList.contains('active')) renderJadwal();
   }
@@ -1010,24 +1277,40 @@ const PENGATURAN = {
   }
   $('hJurusan').onchange = isiKelas;
   // Panel pengawas dilindungi sandi (berlaku sampai tab ditutup)
+  const ADM = { pass: '', rows: [], hapusId: '', editId: '' };
+  try { ADM.pass = sessionStorage.getItem('eNgawas.adminPass') || ''; } catch(e){}
   const adminOk = () => { try { return sessionStorage.getItem('eNgawas.admin') === '1'; } catch(e){ return false; } };
+  async function api(action, data){
+    try {
+      // text/plain agar tidak perlu "preflight" CORS ke Apps Script
+      const res = await fetch(PENGATURAN.API_URL, { method: 'POST', body: JSON.stringify(Object.assign({ action, pass: ADM.pass }, data || {})) });
+      return await res.json();
+    } catch(e) { return { ok: false, error: 'Tidak bisa terhubung ke server jadwal. Periksa internet.' }; }
+  }
   function bukaPanel(){
-    if (adminOk()) { show('setup'); return; }
+    if (adminOk()) { bukaAdmin(); return; }
     $('adminPass').value = ''; $('adminErr').textContent = '';
     $('adminModal').classList.add('active'); setTimeout(() => $('adminPass').focus(), 50);
   }
   $('adminCancel').onclick = () => $('adminModal').classList.remove('active');
   $('adminOk').onclick = async () => {
-    if (await hash($('adminPass').value.trim()) !== PENGATURAN.SANDI_ADMIN_HASH) {
-      $('adminErr').textContent = 'Sandi salah.';
+    const pass = $('adminPass').value.trim();
+    let ok = false, msg = 'Sandi salah.';
+    $('adminOk').disabled = true;
+    if (PENGATURAN.API_URL) { ADM.pass = pass; const r = await api('login'); ok = r.ok; if (!ok) msg = r.error || msg; }
+    else ok = (await hash(pass)) === PENGATURAN.SANDI_ADMIN_HASH;
+    $('adminOk').disabled = false;
+    if (!ok) {
+      ADM.pass = ''; $('adminErr').textContent = msg;
       const i = $('adminPass'); i.classList.remove('shake'); void i.offsetWidth; i.classList.add('shake'); return;
     }
-    try { sessionStorage.setItem('eNgawas.admin', '1'); } catch(e){}
-    $('adminModal').classList.remove('active'); show('setup');
+    ADM.pass = pass;
+    try { sessionStorage.setItem('eNgawas.admin', '1'); sessionStorage.setItem('eNgawas.adminPass', pass); } catch(e){}
+    $('adminModal').classList.remove('active'); bukaAdmin();
   };
   $('adminPass').addEventListener('keydown', e => { if (e.key === 'Enter') $('adminOk').click(); });
   $('toSetup').onclick = bukaPanel;
-  $('setupHome').onclick = () => show('home');
+  $('setupHome').onclick = () => bukaAdmin();
   $('toJadwal').onclick = () => {
     const tingkat = $('hJurusan').value, kelas = $('hKelas').value, nama = $('hNama').value.trim();
     const err = !tingkat ? 'Pilih tingkat.' : !kelas ? 'Pilih kelas.' : !nama ? 'Nama wajib diisi.' : '';
@@ -1130,6 +1413,171 @@ const PENGATURAN = {
     await enterFullscreen();
     beginExam();
   }
+
+  /* ---------- panel admin: kelola jadwal ---------- */
+  const tglISO = t => t ? t[0] + '-' + fmt(t[1]) + '-' + fmt(t[2]) : '';
+  const semuaKelas = () => TINGKAT.flatMap(daftarKelas);
+  function bukaAdmin(){
+    show('admin');
+    const ada = !!PENGATURAN.API_URL;
+    $('aSetup').hidden = ada; $('aBox').hidden = !ada;
+    if (!ada) {
+      $('aStatus').textContent = '⚠️ Panel belum tersambung ke Google Sheet. Ikuti langkah di bawah (sekali saja), setelah itu jadwal bisa ditambah & diubah dari sini.';
+      return;
+    }
+    muatAdmin();
+  }
+  async function muatAdmin(){
+    $('aStatus').textContent = 'Memuat jadwal…';
+    const r = await api('list');
+    if (!r.ok) {
+      $('aStatus').textContent = '❌ ' + (r.error || 'Gagal memuat jadwal.');
+      if (/sandi/i.test(r.error || '')) keluarAdmin();
+      return;
+    }
+    ADM.rows = r.rows || [];
+    $('aStatus').textContent = '';
+    renderAdmin();
+  }
+  function waktuRow(o){
+    const t = parseTanggal(o.tanggal), a = parseJam(o.mulai), b = parseJam(o.selesai);
+    return { t, start: t && a ? new Date(t[0], t[1]-1, t[2], a[0], a[1]) : null, end: t && b ? new Date(t[0], t[1]-1, t[2], b[0], b[1]) : null };
+  }
+  const labelKelas = k => String(k || '').split(/\s*,\s*/).map(t => {
+    const u = up(t); return u === 'SEMUA' ? 'Semua kelas' : TINGKAT.includes(u) ? 'Semua kelas ' + u : t; }).join(', ');
+  function renderAdmin(){
+    const lewat = $('aPast').checked, now = Date.now();
+    const rows = ADM.rows.map(o => Object.assign({}, o, waktuRow(o)))
+      .filter(o => lewat || !o.end || o.end.getTime() >= now)
+      .sort((x, y) => (x.start || 0) - (y.start || 0));
+    if (!rows.length) {
+      $('aList').innerHTML = `<div class="empty" style="color:var(--ink2)">Belum ada jadwal${lewat ? '' : ' yang akan datang'}.<br>Tekan <b>Tambah Jadwal Ujian</b> untuk membuat.</div>`;
+      return;
+    }
+    let html = '', last = '';
+    rows.forEach(o => {
+      const day = o.start ? tglKey(o.start) : o.tanggal;
+      if (day !== last) { html += `<div class="aday">${o.start ? hariLabel(o.start) : esc(o.tanggal)}</div>`; last = day; }
+      const past = o.end && o.end.getTime() < now;
+      html += `<div class="aitem${past ? ' past' : ''}">
+        <h4>${esc(o.mapel)}</h4>
+        <div class="meta">🕘 <b>${esc(o.mulai)} – ${esc(o.selesai)}</b> · PIN <b>${esc(o.pin)}</b> · Maks. ${esc(o.batas)} pelanggaran<br>👥 ${esc(labelKelas(o.kelas))}</div>
+        <div class="aact">
+          <button type="button" data-edit="${esc(o.id)}">✏️ Ubah</button>
+          <button type="button" data-dup="${esc(o.id)}">⧉ Salin</button>
+          <button type="button" class="del" data-del="${esc(o.id)}">🗑 Hapus</button>
+        </div></div>`;
+    });
+    $('aList').innerHTML = html;
+  }
+  $('aPast').onchange = renderAdmin;
+  $('tabCepat').onclick = () => show('setup');
+  $('aKeluar').onclick = () => { keluarAdmin(); show('home'); };
+  function keluarAdmin(){ ADM.pass = ''; try { sessionStorage.removeItem('eNgawas.admin'); sessionStorage.removeItem('eNgawas.adminPass'); } catch(e){} }
+  $('copyGas').onclick = async () => {
+    const code = $('gasCode').textContent;
+    try { await navigator.clipboard.writeText(code); toast('✅ Kode Apps Script disalin. Tempel di editor Apps Script.'); }
+    catch(e) { toast('Tidak bisa menyalin otomatis. Ambil file Code.gs dari GitHub.'); }
+  };
+
+  // --- pemilih kelas (chip) ---
+  function renderPemilihKelas(terpilih){
+    $('fKelas').innerHTML = TINGKAT.map(t => `<div class="kgroup">
+      <div class="khead"><b>Kelas ${esc(t)}</b><button type="button" data-all="${esc(t)}">Pilih semua</button></div>
+      <div class="kchips">${daftarKelas(t).map(k => `<button type="button" class="kchip${terpilih.has(k) ? ' on' : ''}" data-k="${esc(k)}">${esc(k.slice(t.length + 1))}</button>`).join('')}</div>
+    </div>`).join('');
+  }
+  $('fKelas').addEventListener('click', e => {
+    const c = e.target.closest('.kchip'); if (c) { c.classList.toggle('on'); return; }
+    const a = e.target.closest('[data-all]'); if (!a) return;
+    const chips = [...a.closest('.kgroup').querySelectorAll('.kchip')];
+    const semua = chips.every(x => x.classList.contains('on'));
+    chips.forEach(x => x.classList.toggle('on', !semua));
+  });
+  const kelasTerpilih = () => [...$('fKelas').querySelectorAll('.kchip.on')].map(x => x.dataset.k);
+  function kodeKelas(list){
+    const all = semuaKelas();
+    if (list.length === all.length) return 'SEMUA';
+    const parts = [];
+    TINGKAT.forEach(t => { const ks = daftarKelas(t), pilih = ks.filter(k => list.includes(k));
+      if (pilih.length && pilih.length === ks.length) parts.push(t); else parts.push(...pilih); });
+    return parts.join(', ');
+  }
+  const bacaKelas = teks => { const tok = String(teks || '').split(/[,;\n]/).map(up).filter(Boolean);
+    return new Set(semuaKelas().filter(k => tok.some(t => tokenCocok(t, k)))); };
+
+  // --- form tambah / ubah ---
+  function bukaForm(o, salin){
+    ADM.editId = o && !salin ? o.id : '';
+    $('fTitle').textContent = ADM.editId ? 'Ubah Jadwal' : 'Tambah Jadwal';
+    $('fMapel').value = o ? o.mapel : '';
+    $('fTanggal').value = o ? tglISO(parseTanggal(o.tanggal)) : tglKey(new Date());
+    const j = s => { const x = parseJam(s); return x ? fmt(x[0]) + ':' + fmt(x[1]) : ''; };
+    $('fMulai').value = o ? j(o.mulai) : '07:30';
+    $('fSelesai').value = o ? j(o.selesai) : '09:00';
+    $('fLink').value = o ? o.link : '';
+    $('fPin').value = o && !salin ? o.pin : String(Math.floor(100000 + Math.random() * 900000));
+    $('fBatas').value = o ? o.batas : (PENGATURAN.BATAS_PELANGGARAN || 3);
+    renderPemilihKelas(o ? bacaKelas(o.kelas) : new Set());
+    $('fErr').textContent = '';
+    $('formModal').classList.add('active');
+    $('formModal').querySelector('.card').scrollTop = 0;
+  }
+  $('aAdd').onclick = () => bukaForm(null);
+  $('fBatal').onclick = () => $('formModal').classList.remove('active');
+  $('fPinAcak').onclick = () => { $('fPin').value = String(Math.floor(100000 + Math.random() * 900000)); };
+  $('aList').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const find = id => ADM.rows.find(o => String(o.id) === id);
+    if (b.dataset.edit) bukaForm(find(b.dataset.edit));
+    if (b.dataset.dup) bukaForm(find(b.dataset.dup), true);
+    if (b.dataset.del) { const o = find(b.dataset.del); ADM.hapusId = o.id;
+      $('delMsg').innerHTML = `<b>${esc(o.mapel)}</b><br>${esc(o.tanggal)} · ${esc(o.mulai)}–${esc(o.selesai)}<br>${esc(o.kelas)}`;
+      $('delModal').classList.add('active'); }
+  });
+  $('fSimpan').onclick = async () => {
+    const kelas = kelasTerpilih();
+    const row = { id: ADM.editId, mapel: $('fMapel').value.trim(), tanggal: $('fTanggal').value,
+      mulai: $('fMulai').value, selesai: $('fSelesai').value, kelas: kodeKelas(kelas),
+      link: $('fLink').value.trim(), pin: $('fPin').value.trim(), batas: Math.max(1, Math.min(20, parseInt($('fBatas').value) || 3)) };
+    let err = !row.mapel ? 'Isi nama mata pelajaran.' : !row.tanggal ? 'Pilih tanggal.' : !row.mulai || !row.selesai ? 'Isi jam mulai & selesai.'
+      : row.selesai <= row.mulai ? 'Jam selesai harus setelah jam mulai.' : !kelas.length ? 'Pilih minimal satu kelas.'
+      : !row.link ? 'Isi link soal ujian.' : row.pin.length < 4 ? 'PIN minimal 4 digit.' : '';
+    if (!err) { try { normalizeUrl(row.link); } catch(e){ err = 'Link soal tidak valid.'; } }
+    $('fErr').textContent = err; if (err) return;
+    $('fSimpan').disabled = true; $('fSimpan').textContent = 'Menyimpan…';
+    const r = await api('save', { row });
+    $('fSimpan').disabled = false; $('fSimpan').textContent = 'Simpan Jadwal';
+    if (!r.ok) { $('fErr').textContent = r.error || 'Gagal menyimpan.'; return; }
+    $('formModal').classList.remove('active');
+    toast('✅ Jadwal disimpan. Siswa langsung melihatnya.');
+    muatAdmin(); loadJadwal();
+  };
+  $('delNo').onclick = () => $('delModal').classList.remove('active');
+  $('delYes').onclick = async () => {
+    $('delYes').disabled = true;
+    const r = await api('delete', { id: ADM.hapusId });
+    $('delYes').disabled = false;
+    $('delModal').classList.remove('active');
+    if (!r.ok) { toast('❌ ' + (r.error || 'Gagal menghapus.')); return; }
+    toast('🗑 Jadwal dihapus.'); muatAdmin(); loadJadwal();
+  };
+  // --- ganti sandi ---
+  $('aSandi').onclick = () => {
+    if (!PENGATURAN.API_URL) { toast('Sandi bisa diganti setelah panel tersambung ke Google Sheet.'); return; }
+    $('sBaru').value = ''; $('sUlang').value = ''; $('sErr').textContent = '';
+    $('sandiModal').classList.add('active');
+  };
+  $('sBatal').onclick = () => $('sandiModal').classList.remove('active');
+  $('sSimpan').onclick = async () => {
+    const a = $('sBaru').value.trim(), b = $('sUlang').value.trim();
+    const err = a.length < 4 ? 'Sandi minimal 4 karakter.' : a !== b ? 'Sandi tidak sama.' : '';
+    $('sErr').textContent = err; if (err) return;
+    const r = await api('sandi', { baru: a });
+    if (!r.ok) { $('sErr').textContent = r.error || 'Gagal.'; return; }
+    ADM.pass = a; try { sessionStorage.setItem('eNgawas.adminPass', a); } catch(e){}
+    $('sandiModal').classList.remove('active'); toast('✅ Sandi admin diganti.');
+  };
 
   /* ---------- mulai ---------- */
   if (S.running) {
