@@ -1,0 +1,1141 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b1b3f">
+<title>e-Ngawas · SMKN 1 Sungai Rumbai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 8 13v17c0 15 10 26 24 30 14-4 24-15 24-30V13Z' fill='%232563eb'/%3E%3Cpath d='M18 33c4-7 9-10 14-10s10 3 14 10c-4 7-9 10-14 10s-10-3-14-10Z' fill='%23fff'/%3E%3Ccircle cx='32' cy='33' r='5' fill='%230b1b3f'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --navy:#0b1b3f; --navy2:#13285c; --blue:#2563eb; --blue2:#3b82f6; --cyan:#22d3ee;
+    --gold:#fbbf24; --ink:#0f172a; --ink2:#475569; --muted:#94a3b8; --line:#e2e8f0;
+    --soft:#f1f5f9; --card:#ffffff; --danger:#dc2626; --danger2:#ef4444; --ok:#16a34a;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;min-height:100%;
+    font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:var(--ink);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overscroll-behavior:none}
+  html{background:#0a1430}
+  body{background-color:#0a1430;background-image:
+      radial-gradient(900px 500px at 110% -10%, rgba(34,211,238,.22), transparent 60%),
+      radial-gradient(700px 500px at -20% 30%, rgba(37,99,235,.35), transparent 60%),
+      linear-gradient(160deg, var(--navy) 0%, var(--navy2) 55%, #0a1430 100%);
+    background-repeat:no-repeat;background-size:100% 100vh}
+  input{-webkit-user-select:text;user-select:text;font-family:inherit}
+  button{font-family:inherit}
+
+  /* ---------- layout umum ---------- */
+  .screen{display:none;min-height:100vh;min-height:100dvh;padding:24px 16px 32px;flex-direction:column;align-items:center}
+  .screen.active{display:flex}
+  .wrap{width:100%;max-width:460px;display:flex;flex-direction:column;gap:16px;margin:auto 0}
+
+  .brand{display:flex;align-items:center;gap:14px;color:#fff;padding:4px 4px 8px}
+  .logo{width:56px;height:56px;flex:0 0 auto;filter:drop-shadow(0 8px 18px rgba(37,99,235,.55))}
+  .brand-name{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .brand-name span{background:linear-gradient(90deg,var(--cyan),var(--blue2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand-school{font-size:12.5px;font-weight:700;letter-spacing:.14em;color:#c7d2fe;margin-top:6px}
+  .brand-tag{font-size:12px;color:#93a3c8;margin-top:2px}
+
+  .card{background:var(--card);border-radius:var(--radius);padding:22px;
+    box-shadow:0 24px 60px -20px rgba(2,6,23,.6),0 0 0 1px rgba(255,255,255,.06)}
+  .card-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .card-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#eff6ff;color:var(--blue);flex:0 0 auto}
+  .card-ico svg{width:22px;height:22px}
+  .card h1{font-size:19px;margin:0;font-weight:800;letter-spacing:-.01em}
+  .card .sub{font-size:13px;color:var(--ink2);margin:2px 0 0}
+
+  .field{margin-top:14px}
+  .field label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px}
+  .input{position:relative}
+  .input svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+  .input input{width:100%;padding:13px 14px 13px 42px;border-radius:12px;border:1.5px solid var(--line);
+    background:var(--soft);color:var(--ink);font-size:15.5px;font-weight:500;outline:none;transition:.15s}
+  .input input:focus{border-color:var(--blue2);background:#fff;box-shadow:0 0 0 4px rgba(59,130,246,.15)}
+  .row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
+
+  .stepper{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;background:var(--soft);overflow:hidden}
+  .stepper button{width:44px;height:47px;border:0;background:transparent;font-size:20px;font-weight:700;color:var(--blue);cursor:pointer}
+  .stepper button:active{background:#e0e7ff}
+  .stepper input{flex:1;width:100%;border:0;background:transparent;text-align:center;font-size:17px;font-weight:800;color:var(--ink);outline:none;padding:0}
+
+  .btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;padding:15px;border:0;border-radius:14px;
+    font-size:15.5px;font-weight:700;cursor:pointer;transition:transform .08s, filter .15s}
+  .btn:active{transform:scale(.98)}
+  .btn svg{width:19px;height:19px}
+  .btn-primary{color:#fff;background:linear-gradient(135deg,var(--blue) 0%,#1d4ed8 60%,#1e40af 100%);box-shadow:0 10px 24px -8px rgba(37,99,235,.7)}
+  .btn-ghost{background:var(--soft);color:var(--ink);border:1.5px solid var(--line)}
+  .btn-danger{color:#fff;background:linear-gradient(135deg,var(--danger2),var(--danger))}
+  .btn + .btn{margin-top:10px}
+  .err{color:var(--danger);font-size:13px;font-weight:600;min-height:0;margin-top:10px}
+  .err:empty{display:none}
+
+  .share{display:none;margin-top:14px;padding:16px;border-radius:16px;background:linear-gradient(180deg,#eff6ff,#fff);border:1.5px dashed #bfdbfe;text-align:center}
+  .share.show{display:block}
+  .share .ok{font-size:13px;font-weight:700;color:var(--ok)}
+  #qr{display:flex;justify-content:center;margin:12px auto 10px}
+  #qr img,#qr canvas{border-radius:10px;background:#fff;padding:8px;box-shadow:0 4px 14px rgba(15,23,42,.1)}
+  .share .link{font-size:11.5px;color:var(--ink2);word-break:break-all;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:left}
+
+  .rules{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+  .rules li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2);line-height:1.45;background:var(--soft);border-radius:12px;padding:10px 12px}
+  .rules li b{color:var(--ink)}
+  .rules .dot{flex:0 0 26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;background:#fff;box-shadow:0 1px 3px rgba(15,23,42,.08)}
+
+  .exam-info{display:flex;gap:8px;margin-top:14px}
+  .exam-info div{flex:1;background:var(--soft);border-radius:12px;padding:10px;text-align:center}
+  .exam-info b{display:block;font-size:18px;font-weight:800;color:var(--blue)}
+  .exam-info small{font-size:11px;color:var(--ink2);font-weight:600}
+
+  .foot{color:#7d8db3;font-size:11.5px;text-align:center;margin-top:6px}
+  .link-btn{background:none;border:0;color:#a5b4fc;font-size:12.5px;font-weight:600;text-decoration:underline;cursor:pointer;padding:4px}
+
+  /* ---------- layar ujian ---------- */
+  #exam{display:none;position:fixed;inset:0;flex-direction:column;background:#fff}
+  #exam.active{display:flex}
+  #bar{display:flex;align-items:center;gap:8px;padding:8px 10px;padding-top:max(8px,env(safe-area-inset-top));
+    background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;flex:0 0 auto;box-shadow:0 2px 12px rgba(2,6,23,.3);z-index:2}
+  #bar .logo{width:30px;height:30px;filter:none}
+  #bar .who{flex:1;min-width:0;line-height:1.15}
+  #bar .who b{display:block;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #bar .who small{font-size:10.5px;color:#a5b4fc;font-weight:600;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .chip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.1);font-size:12.5px;font-weight:700;white-space:nowrap}
+  .chip.bad{background:var(--danger2)}
+  .chip svg{width:14px;height:14px}
+  .pips{display:flex;gap:3px}
+  .pips i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3)}
+  .pips i.on{background:var(--gold)}
+  .chip.bad .pips i.on{background:#fff}
+  #finish{border:0;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:800;color:#fff;background:linear-gradient(135deg,#16a34a,#15803d);cursor:pointer}
+  #frame{flex:1;border:0;width:100%;background:#fff}
+  #frameLoad{position:absolute;inset:56px 0 0;display:grid;place-items:center;color:var(--ink2);font-size:14px;pointer-events:none}
+  .spin{width:36px;height:36px;border-radius:50%;border:4px solid #dbeafe;border-top-color:var(--blue);animation:spin 1s linear infinite;margin:0 auto 10px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ---------- overlay terkunci ---------- */
+  #lock{display:none;position:fixed;inset:0;z-index:130;align-items:center;justify-content:center;padding:16px;
+    background:radial-gradient(circle at 50% 30%, #991b1b 0%, #450a0a 70%);animation:flash 1s steps(2) infinite}
+  #lock.active{display:flex}
+  @keyframes flash{50%{background:radial-gradient(circle at 50% 30%, #dc2626 0%, #7f1d1d 70%)}}
+  #lock .card{max-width:420px;width:100%;text-align:center;border-top:6px solid var(--danger)}
+  .siren{width:84px;height:84px;margin:-62px auto 8px;border-radius:50%;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--danger2),var(--danger));color:#fff;box-shadow:0 0 0 8px #fff,0 0 0 0 rgba(239,68,68,.6);animation:pulse 1s infinite}
+  .siren svg{width:42px;height:42px}
+  @keyframes pulse{0%{box-shadow:0 0 0 8px #fff,0 0 0 8px rgba(239,68,68,.6)}100%{box-shadow:0 0 0 8px #fff,0 0 0 34px rgba(239,68,68,0)}}
+  #lock h2{margin:4px 0 4px;font-size:22px;font-weight:800;color:var(--danger)}
+  #lockMsg{font-size:14px;color:var(--ink2);margin:0 0 6px;line-height:1.5}
+  .pin-input{width:100%;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--soft);
+    font-size:26px;font-weight:800;letter-spacing:.5em;text-align:center;outline:none;color:var(--ink);font-family:inherit}
+  .pin-input:focus{border-color:var(--danger2);background:#fff}
+  .shake{animation:shake .35s}
+  @keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+  #log{margin-top:14px;text-align:left;max-height:150px;overflow:auto;display:grid;gap:6px}
+  #log div{font-size:12px;background:#fef2f2;color:#991b1b;border-radius:10px;padding:8px 10px;display:flex;gap:8px}
+  #log div b{flex:0 0 auto}
+
+  /* ---------- modal & hasil ---------- */
+  .modal{display:none;position:fixed;inset:0;z-index:120;background:rgba(2,6,23,.65);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}
+  .modal.active{display:flex}
+  .modal .card{max-width:400px;width:100%;text-align:center}
+  .big-ico{width:72px;height:72px;margin:0 auto 10px;border-radius:22px;display:grid;place-items:center}
+  .big-ico svg{width:38px;height:38px}
+  .big-ico.green{background:#dcfce7;color:var(--ok)}
+  .big-ico.amber{background:#fef3c7;color:#d97706}
+  .modal p{font-size:14px;color:var(--ink2);line-height:1.5}
+  .stat{display:flex;gap:8px;margin-top:14px}
+  .stat div{flex:1;background:var(--soft);border-radius:14px;padding:12px}
+  .stat b{display:block;font-size:20px;font-weight:800}
+  .stat small{font-size:11px;color:var(--ink2);font-weight:600}
+
+  /* ---------- jadwal ---------- */
+  .select{position:relative}
+  .select select{width:100%;appearance:none;-webkit-appearance:none;padding:13px 40px 13px 42px;border-radius:12px;border:1.5px solid var(--line);
+    background:var(--soft);color:var(--ink);font-size:15.5px;font-weight:600;outline:none;font-family:inherit}
+  .select select:focus{border-color:var(--blue2);background:#fff;box-shadow:0 0 0 4px rgba(59,130,246,.15)}
+  .select > svg:first-child{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--muted);pointer-events:none}
+  .select .chev{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink2);pointer-events:none}
+  .demo{background:#fef3c7;color:#92400e;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.45;font-weight:600}
+  .demo:empty{display:none}
+  .who-card{display:flex;align-items:center;gap:12px}
+  .avatar{width:46px;height:46px;border-radius:14px;flex:0 0 auto;display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;
+    background:linear-gradient(135deg,var(--cyan),var(--blue))}
+  .who-card .meta{flex:1;min-width:0}
+  .who-card b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .who-card small{font-size:12.5px;color:var(--ink2);font-weight:600}
+  .who-card button{border:1.5px solid var(--line);background:var(--soft);border-radius:10px;padding:8px 12px;font-weight:700;font-size:12.5px;color:var(--ink);cursor:pointer}
+  #jList{display:flex;flex-direction:column;gap:12px}
+  .day{color:#c7d2fe;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:10px 4px 0}
+  .day:first-child{margin-top:0}
+  .exam-card{background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px;
+    box-shadow:0 18px 40px -18px rgba(2,6,23,.6);border-left:6px solid var(--line)}
+  .exam-card.live{border-left-color:var(--ok)}
+  .exam-card.soon{border-left-color:var(--blue2)}
+  .exam-card.past{border-left-color:var(--line);opacity:.75}
+  .exam-card .top{display:flex;align-items:flex-start;gap:10px}
+  .exam-card h3{margin:0;font-size:16.5px;font-weight:800;flex:1;min-width:0}
+  .exam-card .when{display:flex;gap:14px;font-size:13px;color:var(--ink2);font-weight:600;flex-wrap:wrap}
+  .exam-card .when span{display:flex;align-items:center;gap:5px}
+  .exam-card .when svg{width:15px;height:15px}
+  .badge{font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;white-space:nowrap;letter-spacing:.03em}
+  .badge.live{background:#dcfce7;color:#166534}
+  .badge.soon{background:#dbeafe;color:#1e40af}
+  .badge.past{background:var(--soft);color:var(--ink2)}
+  .badge.done{background:#ede9fe;color:#5b21b6}
+  .exam-card .cd{font-size:13px;font-weight:700;color:var(--ink)}
+  .exam-card .btn{margin-top:2px;padding:12px}
+  .btn[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(.3)}
+  .empty{text-align:center;color:#c7d2fe;font-size:14px;padding:24px 10px;line-height:1.6}
+  .chip.warn{background:var(--gold);color:#422006}
+  .toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:110;background:var(--gold);color:#422006;font-weight:800;font-size:13.5px;
+    padding:10px 16px;border-radius:999px;box-shadow:0 10px 30px rgba(2,6,23,.35);display:none;max-width:calc(100% - 32px);text-align:center}
+  .toast.show{display:block}
+
+  @media (max-width:380px){ .brand-name{font-size:24px} #bar .chip.time{display:none} }
+</style>
+</head>
+<body>
+
+<!-- Logo (dipakai ulang) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <symbol id="logo" viewBox="0 0 64 64">
+      <path d="M32 3 7 12.5v17.8C7 45.6 17.6 57 32 61c14.4-4 25-15.4 25-30.7V12.5Z" fill="url(#lg)"/>
+      <path d="M32 7.5 11 15.5v14.8C11 43 19.8 52.8 32 56.6V7.5Z" fill="#fff" opacity=".12"/>
+      <path d="M16.5 32c4.3-7.4 9.5-11 15.5-11s11.2 3.6 15.5 11c-4.3 7.4-9.5 11-15.5 11s-11.2-3.6-15.5-11Z" fill="#fff"/>
+      <circle cx="32" cy="32" r="6.5" fill="#0b1b3f"/><circle cx="34.3" cy="29.7" r="2" fill="#fff"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- 0a. Beranda siswa: pilih jurusan & kelas -->
+<section id="home" class="screen">
+  <div class="wrap">
+    <header class="brand">
+      <svg class="logo"><use href="#logo"/></svg>
+      <div>
+        <div class="brand-name">e-<span>Ngawas</span></div>
+        <div class="brand-school">SMKN 1 SUNGAI RUMBAI</div>
+        <div class="brand-tag">Sistem Pengawasan Ujian Online</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div>
+        <div><h1>Masuk Peserta</h1><p class="sub">Pilih tingkat dan kelas untuk melihat jadwal ujian</p></div>
+      </div>
+
+      <div class="field">
+        <label for="hJurusan">Tingkat</label>
+        <div class="select">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
+          <select id="hJurusan"><option value="">— Pilih tingkat —</option></select>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="field">
+        <label for="hKelas">Kelas</label>
+        <div class="select" id="hKelasWrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10 12 5l9 5-9 5z"/><path d="M7 12v5c3 2 7 2 10 0v-5"/></svg>
+          <select id="hKelas"><option value="">Pilih tingkat dulu</option></select>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:3">
+          <label for="hNama">Nama lengkap</label>
+          <div class="input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+            <input id="hNama" autocomplete="off" placeholder="Nama siswa">
+          </div>
+        </div>
+        <div class="field" style="flex:1.3">
+          <label for="hAbsen">No. absen</label>
+          <div class="input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+            <input id="hAbsen" inputmode="numeric" autocomplete="off" placeholder="15">
+          </div>
+        </div>
+      </div>
+      <div class="err" id="homeErr"></div>
+      <button class="btn btn-primary" id="toJadwal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Lihat Jadwal Ujian
+      </button>
+    </div>
+    <div class="demo" id="demoNote"></div>
+    <div class="foot">
+      <button class="link-btn" id="toSetup">Panel pengawas (ujian tanpa jadwal)</button><br>
+      © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
+    </div>
+  </div>
+</section>
+
+<!-- 0b. Daftar jadwal ujian kelas -->
+<section id="jadwal" class="screen">
+  <div class="wrap">
+    <header class="brand">
+      <svg class="logo"><use href="#logo"/></svg>
+      <div>
+        <div class="brand-name">e-<span>Ngawas</span></div>
+        <div class="brand-school">SMKN 1 SUNGAI RUMBAI</div>
+      </div>
+    </header>
+    <div class="card who-card">
+      <div class="avatar" id="jAvatar">A</div>
+      <div class="meta"><b id="jNama"></b><small id="jKelas"></small></div>
+      <button id="jGanti">Ganti</button>
+    </div>
+    <div class="demo" id="demoNote2"></div>
+    <div id="jList"></div>
+    <button class="btn btn-ghost" id="testSound2" style="background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.15)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+      Tes suara alarm (2 detik)
+    </button>
+    <div class="foot">Jadwal diperbarui otomatis · <button class="link-btn" id="jRefresh">Muat ulang jadwal</button></div>
+  </div>
+</section>
+
+<!-- 1. Panel pengawas -->
+<section id="setup" class="screen">
+  <div class="wrap">
+    <header class="brand">
+      <svg class="logo"><use href="#logo"/></svg>
+      <div>
+        <div class="brand-name">e-<span>Ngawas</span></div>
+        <div class="brand-school">SMKN 1 SUNGAI RUMBAI</div>
+        <div class="brand-tag">Sistem Pengawasan Ujian Online</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <div><h1>Panel Pengawas</h1><p class="sub">Atur ujian, lalu bagikan ke siswa</p></div>
+      </div>
+
+      <div class="field">
+        <label for="url">Link ujian</label>
+        <div class="input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>
+          <input id="url" type="url" placeholder="Google Form, Quizizz, LMS…" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="pin">PIN pengawas</label>
+          <div class="input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+            <input id="pin" type="password" inputmode="numeric" placeholder="min. 4 digit" autocomplete="off">
+          </div>
+        </div>
+        <div class="field">
+          <label for="max">Batas pelanggaran</label>
+          <div class="stepper">
+            <button type="button" data-step="-1" aria-label="Kurangi">−</button>
+            <input id="max" type="number" min="1" max="20" value="3" inputmode="numeric">
+            <button type="button" data-step="1" aria-label="Tambah">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="err" id="setupErr"></div>
+
+      <button class="btn btn-primary" id="makeLink">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
+        Buat Link &amp; QR untuk Siswa
+      </button>
+      <button class="btn btn-ghost" id="toStudent">Ujian di perangkat ini</button>
+
+      <div class="share" id="shareBox">
+        <div class="ok" id="shareOk">✅ Link disalin. Siswa bisa scan QR ini:</div>
+        <div id="qr"></div>
+        <div class="link" id="shareLink"></div>
+      </div>
+    </div>
+    <div class="foot">
+      <button class="link-btn" id="setupHome">Kembali ke jadwal ujian</button><br>
+      © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
+    </div>
+  </div>
+</section>
+
+<!-- 2. Identitas peserta -->
+<section id="student" class="screen">
+  <div class="wrap">
+    <header class="brand">
+      <svg class="logo"><use href="#logo"/></svg>
+      <div>
+        <div class="brand-name">e-<span>Ngawas</span></div>
+        <div class="brand-school">SMKN 1 SUNGAI RUMBAI</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div>
+        <div><h1>Data Peserta Ujian</h1><p class="sub">Isi dengan benar sebelum memulai</p></div>
+      </div>
+
+      <div class="field">
+        <label for="nama">Nama lengkap</label>
+        <div class="input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+          <input id="nama" autocomplete="off" placeholder="Nama siswa">
+        </div>
+      </div>
+      <div class="field">
+        <label for="kelas">Kelas / No. absen</label>
+        <div class="input">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10 12 5l9 5-9 5z"/><path d="M7 12v5c3 2 7 2 10 0v-5"/></svg>
+          <input id="kelas" autocomplete="off" placeholder="XI TKJ 1 / 15">
+        </div>
+      </div>
+
+      <div class="exam-info">
+        <div><b id="infoMax">3</b><small>Batas pelanggaran</small></div>
+        <div><b>🔒</b><small>Layar penuh</small></div>
+        <div><b>🔊</b><small>Alarm aktif</small></div>
+      </div>
+
+      <ul class="rules">
+        <li><span class="dot">📵</span><span>Dilarang <b>pindah tab, membuka aplikasi lain,</b> atau <b>split screen</b>.</span></li>
+        <li><span class="dot">🚨</span><span>Setiap pelanggaran <b>mengunci ujian</b> dan <b>membunyikan alarm</b>. Hanya pengawas yang bisa membuka.</span></li>
+        <li><span class="dot">⛔</span><span>Melebihi batas pelanggaran, ujian <b>dihentikan</b>.</span></li>
+        <li><span class="dot">🔈</span><span>Jangan kecilkan volume HP selama ujian.</span></li>
+      </ul>
+
+      <div class="err" id="studentErr"></div>
+      <button class="btn btn-ghost" id="testSound">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        Tes suara alarm (2 detik)
+      </button>
+      <button class="btn btn-primary" id="start">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Mulai Ujian
+      </button>
+    </div>
+    <div class="foot">
+      <button class="link-btn" id="backSetup">Panel pengawas</button><br>
+      © <span class="yr"></span> SMKN 1 Sungai Rumbai · e-Ngawas
+    </div>
+  </div>
+</section>
+
+<!-- 3. Layar ujian -->
+<section id="exam">
+  <div id="bar">
+    <svg class="logo"><use href="#logo"/></svg>
+    <div class="who"><b id="barName"></b><small id="barSub">e-NGAWAS · SMKN 1 SUNGAI RUMBAI</small></div>
+    <span class="chip" id="barViol" title="Pelanggaran">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <span class="pips" id="pips"></span>
+    </span>
+    <span class="chip time"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span id="barTime">00:00</span></span>
+    <button id="finish">Selesai</button>
+  </div>
+  <div id="frameLoad"><div><div class="spin"></div>Memuat soal ujian…</div></div>
+  <iframe id="frame" allow="fullscreen; camera; microphone" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</section>
+
+<!-- 4. Overlay terkunci -->
+<div id="lock">
+  <div class="card">
+    <div class="siren"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 21h14v-3H5zM12 2v2M4.2 5.2l1.4 1.4M19.8 5.2l-1.4 1.4M2 12h2M20 12h2"/></svg></div>
+    <h2 id="lockTitle">UJIAN TERKUNCI</h2>
+    <p id="lockMsg"></p>
+    <div class="field" style="text-align:left">
+      <label for="unlockPin" style="text-align:center">Masukkan PIN pengawas</label>
+      <input id="unlockPin" class="pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="••••">
+    </div>
+    <div class="err" id="lockErr"></div>
+    <button class="btn btn-danger" id="unlock">Buka Kunci &amp; Lanjutkan</button>
+    <div id="log"></div>
+  </div>
+</div>
+
+<!-- 5. Konfirmasi selesai -->
+<div class="modal" id="confirmModal">
+  <div class="card">
+    <div class="big-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg></div>
+    <h1>Akhiri ujian?</h1>
+    <p>Pastikan jawaban sudah <b>DIKIRIM / SUBMIT</b> di formulir ujian sebelum mengakhiri.</p>
+    <button class="btn btn-primary" id="confirmYes">Ya, akhiri ujian</button>
+    <button class="btn btn-ghost" id="confirmNo">Kembali ke soal</button>
+  </div>
+</div>
+
+<!-- 6. Hasil -->
+<div class="modal" id="doneModal">
+  <div class="card">
+    <div class="big-ico green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>
+    <h1>Ujian Selesai</h1>
+    <p id="doneName"></p>
+    <div class="stat">
+      <div><b id="doneTime">00:00</b><small>Durasi</small></div>
+      <div><b id="doneViol">0</b><small>Pelanggaran</small></div>
+    </div>
+    <button class="btn btn-primary" id="doneOk">Tutup</button>
+  </div>
+</div>
+
+<!-- 7. Waktu habis -->
+<div class="modal" id="timeModal">
+  <div class="card">
+    <div class="big-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg></div>
+    <h1>Waktu Ujian Habis</h1>
+    <p>Segera tekan <b>KIRIM / SUBMIT</b> di formulir ujian.<br>Ujian berakhir otomatis dalam <b id="graceLeft">2:00</b>.</p>
+    <button class="btn btn-ghost" id="timeBack">Kembali ke soal untuk submit</button>
+    <button class="btn btn-primary" id="timeEnd">Saya sudah submit, akhiri</button>
+  </div>
+</div>
+
+<!-- 8. PIN pengawas (masuk ulang) -->
+<div class="modal" id="pinModal">
+  <div class="card">
+    <div class="big-ico amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+    <h1>Izin Pengawas</h1>
+    <p id="pinMsg">Ujian ini sudah pernah dikerjakan. Masukkan PIN pengawas untuk masuk lagi.</p>
+    <input id="pinModalInput" class="pin-input" type="password" inputmode="numeric" autocomplete="off" placeholder="••••">
+    <div class="err" id="pinModalErr"></div>
+    <button class="btn btn-primary" id="pinModalOk">Lanjutkan</button>
+    <button class="btn btn-ghost" id="pinModalCancel">Batal</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* =====================================================================
+   PENGATURAN SEKOLAH: cukup ubah bagian ini
+   ---------------------------------------------------------------------
+   JADWAL_SHEET : link Google Sheet berisi jadwal ujian (Bagikan →
+                  "Siapa saja yang memiliki link" → Pelihat), atau link
+                  "Publikasikan ke web" format CSV. Kosongkan ('') untuk
+                  memakai jadwal CONTOH.
+   DAFTAR_KELAS : daftar kelas per tingkat yang muncul di pilihan siswa.
+   PIN_UTAMA    : PIN pengawas cadangan bila kolom PIN di sheet kosong.
+   WAKTU_TAMBAHAN_MENIT : waktu untuk submit setelah jam selesai.
+   ===================================================================== */
+const PENGATURAN = {
+  // Daftar kelas yang bisa dipilih siswa (tambah/ubah sesuai kebutuhan)
+  DAFTAR_KELAS: {
+    'X':  ['TKL A', 'TKL B', 'TELKA A', 'TELKA B', 'TELKA C', 'DPIB', 'TKP', 'TP', 'TPM', 'DGM', 'TOTO'],
+    'XI': ['TITL A', 'TITL B', 'TOI A', 'TOI B', 'DPIB', 'TKP', 'TP', 'TPM', 'DGM', 'TELIN', 'TSM'],
+    // 'XII': ['...'],
+  },
+  JADWAL_SHEET: '',
+  PIN_UTAMA: '',
+  BATAS_PELANGGARAN: 3,
+  WAKTU_TAMBAHAN_MENIT: 2,
+};
+</script>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const KEY = 'eNgawas.v1';
+  let S = load() || {};
+  let armed = false;        // deteksi aktif hanya saat ujian berjalan & tidak terkunci
+  let timer = null;
+  let baseW = 0, baseH = 0; // ukuran jendela saat layar penuh normal
+
+  document.querySelectorAll('.yr').forEach(e => e.textContent = new Date().getFullYear());
+
+  /* ---------- util ---------- */
+  function load(){ try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+  function show(id){
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    $('exam').classList.remove('active');
+    if (id === 'exam') $('exam').classList.add('active'); else $(id).classList.add('active');
+    if (id === 'student') $('infoMax').textContent = S.max || 3;
+    window.scrollTo(0, 0);
+  }
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const b64e = s => btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const b64d = s => decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
+  async function hash(s){
+    if (!crypto.subtle) return 'plain:' + s;
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('ua:' + s));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  function normalizeUrl(u){
+    u = u.trim();
+    if (!u) throw 0;
+    if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+    const url = new URL(u);
+    // Google Form: paksa mode embedded agar bisa tampil di dalam bingkai
+    if (/docs\.google\.com$/.test(url.hostname) && url.pathname.includes('/forms/')) {
+      url.pathname = url.pathname.replace(/\/(edit|viewanalytics|formResponse)$/, '/viewform');
+      url.searchParams.set('embedded', 'true');
+    }
+    return url.toString();
+  }
+  const fmt = n => String(n).padStart(2,'0');
+  const dur = ms => { const s = Math.max(0, Math.floor(ms/1000)); return (s >= 3600 ? Math.floor(s/3600) + ':' : '') + fmt(Math.floor(s/60)%60) + ':' + fmt(s%60); };
+
+  /* ---------- alarm sirene ---------- */
+  // Suara dibuat langsung oleh kode (tanpa file), berupa WAV sirene 1 detik yang diulang.
+  const alarm = (() => {
+    let audio = null, vibT = null, active = false;
+    function makeSiren(){
+      const rate = 22050, len = rate, data = new Int16Array(len);
+      for (let i = 0, ph = 0; i < len; i++) {
+        const t = i / rate;
+        const f = 700 + 700 * (0.5 + 0.5 * Math.sin(2 * Math.PI * 2 * t)); // naik-turun 700–1400 Hz
+        ph += 2 * Math.PI * f / rate;
+        data[i] = (Math.sin(ph) > 0 ? 1 : -1) * 32767 * 0.9;              // gelombang kotak = lebih nyaring
+      }
+      const buf = new ArrayBuffer(44 + len * 2), v = new DataView(buf);
+      const w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+      w(0,'RIFF'); v.setUint32(4, 36 + len*2, true); w(8,'WAVE'); w(12,'fmt ');
+      v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+      v.setUint32(24,rate,true); v.setUint32(28,rate*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true);
+      w(36,'data'); v.setUint32(40, len*2, true);
+      new Int16Array(buf, 44).set(data);
+      return URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+    }
+    // Harus dipanggil saat siswa menekan tombol (izin suara dari browser).
+    // Audio diputar dalam keadaan "muted" sejak awal agar tetap "hidup" walau siswa pindah aplikasi.
+    // Pakai .muted (bukan .volume) karena Safari iPhone tidak mengizinkan website mengubah volume.
+    function prime(){
+      // Safari 17+: minta jalur suara "playback" agar tidak dibisukan tombol senyap iPhone
+      try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch(e){}
+      if (!audio) {
+        audio = new Audio(makeSiren());
+        audio.loop = true; audio.preload = 'auto';
+        audio.setAttribute('playsinline', '');
+      }
+      audio.volume = 1;
+      audio.muted = !active;
+      const p = audio.play(); if (p && p.catch) p.catch(() => {});
+    }
+    function on(){
+      active = true;
+      prime();
+      try { audio.currentTime = 0; } catch(e){}
+      audio.muted = false;
+      clearInterval(vibT);
+      const tick = () => {
+        try { navigator.vibrate?.([800, 200, 800, 200]); } catch(e){}
+        // Safari bisa menghentikan audio diam-diam (mis. saat aplikasi di latar belakang): putar lagi
+        if (active && audio.paused) { const p = audio.play(); if (p && p.catch) p.catch(() => {}); }
+      };
+      tick(); vibT = setInterval(tick, 1000);
+    }
+    function off(){
+      active = false; clearInterval(vibT);
+      try { navigator.vibrate?.(0); } catch(e){}
+      if (audio) audio.muted = true;   // tetap berputar senyap, siap untuk pelanggaran berikutnya
+    }
+    function stop(){ off(); if (audio) audio.pause(); }
+    function test(){ prime(); on(); setTimeout(off, 2000); }
+    return { prime, on, off, stop, test, get active(){ return active; } };
+  })();
+
+  /* ---------- konfigurasi dari link bagikan (?c=...) ---------- */
+  const qp = new URLSearchParams(location.search).get('c');
+  if (qp && !S.running) {
+    try {
+      const c = JSON.parse(b64d(qp));
+      S = { url: c.u, pinHash: c.p, max: c.m, fromLink: true };
+      save();
+    } catch(e){ /* link rusak, abaikan */ }
+  }
+
+  /* ---------- panel pengawas ---------- */
+  document.querySelectorAll('[data-step]').forEach(b => b.onclick = () => {
+    const m = $('max'); m.value = Math.max(1, Math.min(20, (parseInt(m.value) || 3) + +b.dataset.step));
+  });
+  $('toStudent').onclick = async () => {
+    const cfg = await readSetup(); if (!cfg) return;
+    S = cfg; save(); show('student');
+  };
+  $('makeLink').onclick = async () => {
+    const cfg = await readSetup(); if (!cfg) return;
+    S = cfg; save();
+    const c = b64e(JSON.stringify({ u: cfg.url, p: cfg.pinHash, m: cfg.max }));
+    const link = location.origin + location.pathname + '?c=' + c;
+    $('shareBox').classList.add('show');
+    $('shareLink').textContent = link;
+    $('qr').innerHTML = '';
+    if (window.QRCode) new QRCode($('qr'), { text: link, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.L });
+    let copied = false;
+    try { await navigator.clipboard.writeText(link); copied = true; } catch(e){}
+    $('shareOk').textContent = copied ? '✅ Link disalin. Siswa bisa scan QR ini:' : 'Bagikan link ini atau minta siswa scan QR:';
+    $('shareBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  async function readSetup(){
+    const err = $('setupErr'); err.textContent = '';
+    let url;
+    try { url = normalizeUrl($('url').value); } catch(e){ err.textContent = 'Link ujian belum diisi atau tidak valid.'; return null; }
+    const pin = $('pin').value.trim();
+    if (pin.length < 4) { err.textContent = 'PIN pengawas minimal 4 karakter.'; return null; }
+    const max = Math.max(1, Math.min(20, parseInt($('max').value) || 3));
+    return { url, pinHash: await hash(pin), max };
+  }
+
+  /* ---------- peserta ---------- */
+  $('testSound').onclick = () => alarm.test();
+  $('backSetup').onclick = () => show('setup');
+  $('start').onclick = async () => {
+    const nama = $('nama').value.trim(), kelas = $('kelas').value.trim();
+    if (!nama) { $('studentErr').textContent = 'Nama wajib diisi.'; return; }
+    $('studentErr').textContent = '';
+    alarm.prime();
+    Object.assign(S, { nama, kelas, running: true, startedAt: Date.now(), violations: 0, log: [], locked: false, ended: false });
+    save();
+    await enterFullscreen();
+    beginExam();
+  };
+
+  async function enterFullscreen(){
+    const el = document.documentElement;
+    try {
+      if (el.requestFullscreen) await el.requestFullscreen({ navigationUI: 'hide' });
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    } catch(e){}
+    try { await screen.orientation?.lock?.('portrait'); } catch(e){}
+  }
+  const isFullscreen = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+
+  function beginExam(){
+    show('exam');
+    $('barName').textContent = S.nama + (S.kelas ? ' · ' + S.kelas : '');
+    $('barSub').textContent = S.mapel ? S.mapel.toUpperCase() : 'e-NGAWAS · SMKN 1 SUNGAI RUMBAI';
+    $('frameLoad').style.display = '';
+    $('frame').onload = () => { $('frameLoad').style.display = 'none'; };
+    if ($('frame').src !== S.url) $('frame').src = S.url;
+    updateBar();
+    clearInterval(timer);
+    timer = setInterval(updateBar, 1000);
+    history.pushState(null, '', location.href); // cegah tombol kembali
+    setTimeout(() => { captureBase(); armed = !S.locked; }, 1200);
+    if (S.locked) showLock();
+  }
+  function updateBar(){
+    const v = $('barViol');
+    v.classList.toggle('bad', S.violations > 0);
+    const n = Math.min(S.max, 10);
+    $('pips').innerHTML = Array.from({ length: n }, (_, i) => `<i class="${i < S.violations ? 'on' : ''}"></i>`).join('')
+      + (S.max > 10 ? `<small>${S.violations}/${S.max}</small>` : '');
+    v.title = `Pelanggaran ${S.violations}/${S.max}`;
+    const tc = $('barTime').parentElement;
+    if (!S.endAt) { $('barTime').textContent = dur(Date.now() - S.startedAt); return; }
+    const rem = S.endAt - Date.now();
+    $('barTime').textContent = rem > 0 ? 'Sisa ' + dur(rem) : 'Waktu habis';
+    tc.classList.toggle('warn', rem <= 5 * 60000);
+    if (rem <= 5 * 60000 && rem > 0 && !S.warned5) { S.warned5 = true; save(); toast('⏰ Sisa waktu 5 menit. Periksa jawaban & segera submit.'); }
+    if (rem <= 0) {
+      const grace = S.endAt + (PENGATURAN.WAKTU_TAMBAHAN_MENIT || 0) * 60000 - Date.now();
+      if (!S.timeUp) { S.timeUp = true; save(); $('timeModal').classList.add('active'); }
+      $('graceLeft').textContent = dur(Math.max(0, grace)).replace(/^00:/, '0:');
+      if (grace <= 0) finishExam('Waktu ujian habis.');
+    }
+  }
+  let toastT;
+  function toast(msg){
+    const t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 6000);
+  }
+  $('timeBack').onclick = () => $('timeModal').classList.remove('active');
+  $('timeEnd').onclick = () => finishExam();
+  function captureBase(){ baseW = innerWidth; baseH = innerHeight; }
+
+  /* ---------- pelanggaran ---------- */
+  function violation(reason){
+    if (!armed || !S.running || S.ended) return;
+    armed = false;
+    S.violations++;
+    S.log.push({ t: new Date().toLocaleTimeString('id-ID'), r: reason });
+    S.locked = true;
+    if (S.violations > S.max) S.ended = true;
+    save(); updateBar(); showLock();
+    alarm.on();
+  }
+  function showLock(){
+    $('lockTitle').textContent = S.ended ? 'UJIAN DIHENTIKAN' : 'UJIAN TERKUNCI';
+    $('lockMsg').innerHTML = S.ended
+      ? `Batas pelanggaran (<b>${S.max}</b>) terlampaui.<br>Segera lapor ke pengawas.`
+      : `Pelanggaran ke-<b>${S.violations}</b> dari batas <b>${S.max}</b>.<br>Panggil pengawas untuk membuka kunci.`;
+    $('unlock').textContent = S.ended ? 'Izinkan Lanjut (Pengawas)' : 'Buka Kunci & Lanjutkan';
+    $('log').innerHTML = S.log.slice().reverse().map((l, i) =>
+      `<div><b>#${S.log.length - i} · ${esc(l.t)}</b><span>${esc(l.r)}</span></div>`).join('');
+    $('unlockPin').value = ''; $('lockErr').textContent = '';
+    $('lock').classList.add('active');
+  }
+  $('unlock').onclick = async () => {
+    if (await hash($('unlockPin').value.trim()) !== S.pinHash) {
+      $('lockErr').textContent = 'PIN salah.';
+      const p = $('unlockPin'); p.classList.remove('shake'); void p.offsetWidth; p.classList.add('shake');
+      return;
+    }
+    S.locked = false; S.ended = false; save();
+    alarm.off();
+    $('lock').classList.remove('active');
+    await enterFullscreen();
+    setTimeout(() => { captureBase(); armed = true; }, 1200);
+  };
+  $('unlockPin').addEventListener('keydown', e => { if (e.key === 'Enter') $('unlock').click(); });
+
+  /* ---------- deteksi ---------- */
+  // Pindah tab / buka aplikasi lain / layar mati / tombol Home
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) violation('Meninggalkan halaman ujian (pindah tab / aplikasi lain)');
+    // iPhone/Safari mematikan suara saat di latar belakang → bunyikan lagi begitu siswa kembali
+    else if (S.running && S.locked) alarm.on();
+  });
+  window.addEventListener('pageshow', () => { if (S.running && S.locked) alarm.on(); });
+  window.addEventListener('focus', () => { if (S.running && S.locked) alarm.on(); });
+  // Setiap sentuhan di layar terkunci = izin baru dari browser untuk membunyikan sirene
+  document.addEventListener('pointerdown', () => { if (S.running && S.locked) alarm.on(); }, true);
+  document.addEventListener('touchstart', () => { if (S.running && S.locked) alarm.on(); }, { capture: true, passive: true });
+  // Fokus jendela hilang (Alt+Tab, notifikasi, aplikasi melayang). Klik ke dalam iframe juga memicu blur → dikecualikan.
+  window.addEventListener('blur', () => {
+    setTimeout(() => {
+      if (document.activeElement === $('frame')) return;
+      if (!document.hasFocus()) violation('Fokus berpindah ke jendela/aplikasi lain');
+    }, 300);
+  });
+  // Keluar layar penuh
+  ['fullscreenchange','webkitfullscreenchange'].forEach(ev =>
+    document.addEventListener(ev, () => { if (!isFullscreen()) violation('Keluar dari mode layar penuh'); }));
+  // Split screen / jendela mengambang: ukuran jendela menyusut drastis
+  let rzT;
+  window.addEventListener('resize', () => {
+    clearTimeout(rzT);
+    rzT = setTimeout(() => {
+      if (!armed || !baseW) return;
+      const shrunkW = innerWidth < baseW * 0.85, shrunkH = innerHeight < baseH * 0.6; // 0.6: abaikan keyboard virtual
+      const small = innerWidth < screen.width * 0.8;
+      if (shrunkW || shrunkH || small) violation('Ukuran layar berubah (split screen / jendela mengambang)');
+      else captureBase();
+    }, 400);
+  });
+  // Rotasi layar: perbarui ukuran acuan
+  window.addEventListener('orientationchange', () => setTimeout(captureBase, 800));
+  // Tombol kembali
+  window.addEventListener('popstate', () => {
+    if (S.running) { history.pushState(null, '', location.href); violation('Menekan tombol kembali'); }
+  });
+  // Peringatan saat menutup / reload
+  window.addEventListener('beforeunload', e => { if (S.running && !S.ended) { e.preventDefault(); e.returnValue = ''; } });
+
+  /* ---------- blokir pintasan & salin-tempel ---------- */
+  ['contextmenu','copy','cut','paste','dragstart','selectstart'].forEach(ev =>
+    document.addEventListener(ev, e => { if (!e.target.matches?.('input')) e.preventDefault(); }));
+  document.addEventListener('keydown', e => {
+    const k = (e.key || '').toLowerCase();
+    const blocked =
+      k === 'f12' || k === 'printscreen' || k === 'f5' || k === 'escape' ||
+      ((e.ctrlKey || e.metaKey) && ['t','n','w','r','u','s','p','c','v','x','a','tab','l'].includes(k)) ||
+      ((e.ctrlKey || e.metaKey) && e.shiftKey && ['i','j','c','n','t'].includes(k)) ||
+      (e.altKey && ['tab','arrowleft','arrowright','f4'].includes(k));
+    if (blocked && !(e.target.matches?.('input') && ['c','v','x','a'].includes(k))) {
+      e.preventDefault(); e.stopPropagation();
+      if (k === 'printscreen') { try { navigator.clipboard.writeText(''); } catch(_){} }
+    }
+  }, true);
+
+  /* ---------- selesai ---------- */
+  $('finish').onclick = () => $('confirmModal').classList.add('active');
+  $('confirmNo').onclick = () => $('confirmModal').classList.remove('active');
+  $('confirmYes').onclick = () => finishExam();
+  let returnTo = 'student';
+  function finishExam(note){
+    if (!S.running) return;
+    $('confirmModal').classList.remove('active'); $('timeModal').classList.remove('active');
+    $('lock').classList.remove('active');
+    armed = false; S.running = false; clearInterval(timer); alarm.stop();
+    if (S.examId) { markDone(S.examId); returnTo = 'jadwal'; } else returnTo = 'student';
+    $('doneName').innerHTML = `<b>${esc(S.nama)}</b>${S.kelas ? ' · ' + esc(S.kelas) : ''}`
+      + (S.mapel ? `<br>${esc(S.mapel)}` : '') + `<br>${note ? esc(note) + ' ' : ''}Terima kasih, ujian telah diakhiri.`;
+    $('doneTime').textContent = dur(Date.now() - S.startedAt);
+    $('doneViol').textContent = S.violations;
+    $('doneViol').style.color = S.violations ? 'var(--danger)' : 'var(--ok)';
+    S = { url: S.url, pinHash: S.pinHash, max: S.max }; save();
+    try { document.exitFullscreen?.(); } catch(e){}
+    $('frame').src = 'about:blank';
+    $('doneModal').classList.add('active');
+  }
+  $('doneOk').onclick = () => {
+    $('doneModal').classList.remove('active');
+    if (returnTo === 'jadwal') { S = {}; save(); showJadwal(); return; }
+    $('nama').value = ''; $('kelas').value = '';
+    show('student');
+  };
+
+  /* ---------- jadwal ujian dari Google Sheet ---------- */
+  const KEY_PROFIL = 'eNgawas.profil', KEY_DONE = 'eNgawas.selesai', KEY_CACHE = 'eNgawas.jadwalCache';
+  const getLS = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch(e){ return d; } };
+  const setLS = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
+  let J = [];                 // baris jadwal yang sudah dirapikan
+  let jadwalSumber = '';      // 'sheet' | 'cache' | 'contoh'
+  let P = getLS(KEY_PROFIL, {});
+  // Rapikan nama kelas: huruf besar, tanpa titik, spasi tunggal, "T ELKA" = "TELKA"
+  const up = s => String(s || '').toUpperCase().replace(/\./g, ' ').replace(/\s+/g, ' ').trim()
+    .replace(/\bT ELKA\b/g, 'TELKA').replace(/\bT ELIN\b/g, 'TELIN');
+  const TINGKAT = Object.keys(PENGATURAN.DAFTAR_KELAS || {});
+  // Jurusan sebuah kelas: "XI TITL A" → "TITL", "X DPIB" → "DPIB"
+  const jurusanDari = k => { const w = up(k).split(' ').slice(1); if (w.length > 1 && /^[A-Z]$/.test(w[w.length-1])) w.pop(); return w.join(' '); };
+  // Satu isian di kolom Kelas cocok dengan kelas siswa? (SEMUA / X / X TKL / X TKL A)
+  const tokenCocok = (t, k) => t === 'SEMUA' || t === k || k.startsWith(t + ' ');
+  const HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+  const BULAN = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  const hhmm = d => fmt(d.getHours()) + ':' + fmt(d.getMinutes());
+  const tglKey = d => d.getFullYear() + '-' + fmt(d.getMonth()+1) + '-' + fmt(d.getDate());
+
+  function sheetToCsvUrl(u){
+    u = (u || '').trim(); if (!u) return '';
+    if (/output=csv|format=csv|tqx=out:csv/.test(u)) return u;
+    const m = u.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]{20,})/);
+    if (m && !u.includes('/d/e/')) {
+      const gid = (u.match(/[#&?]gid=(\d+)/) || [])[1];
+      return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv${gid ? '&gid=' + gid : ''}`;
+    }
+    if (u.includes('/pubhtml')) return u.replace('/pubhtml', '/pub') + (u.includes('?') ? '&' : '?') + 'output=csv';
+    return u;
+  }
+  function parseCSV(t){
+    const rows = []; let row = [], f = '', q = false;
+    for (let i = 0; i < t.length; i++) {
+      const c = t[i];
+      if (q) { if (c === '"') { if (t[i+1] === '"') { f += '"'; i++; } else q = false; } else f += c; }
+      else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') { if (c === '\r' && t[i+1] === '\n') i++; row.push(f); rows.push(row); row = []; f = ''; }
+      else f += c;
+    }
+    if (f || row.length) { row.push(f); rows.push(row); }
+    return rows.filter(r => r.some(x => x.trim()));
+  }
+  function parseTanggal(s){
+    s = String(s || '').trim(); let m;
+    if ((m = s.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/))) return [+m[1], +m[2], +m[3]];
+    if ((m = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})/))) {
+      let d = +m[1], mo = +m[2], y = +m[3]; if (y < 100) y += 2000;
+      if (mo > 12 && d <= 12) [d, mo] = [mo, d];      // format bulan/tanggal
+      return [y, mo, d];
+    }
+    const namaBulan = { jan:1, feb:2, mar:3, apr:4, mei:5, may:5, jun:6, jul:7, agu:8, aug:8, sep:9, okt:10, oct:10, nov:11, des:12, dec:12 };
+    if ((m = s.toLowerCase().match(/(\d{1,2})\s+([a-z]{3})[a-z]*\s+(\d{4})/)) && namaBulan[m[2]]) return [+m[3], namaBulan[m[2]], +m[1]];
+    return null;
+  }
+  function parseJam(s){
+    const m = String(s || '').trim().match(/^(\d{1,2})[.:](\d{2})/);
+    return m ? [+m[1], +m[2]] : null;
+  }
+  function rapikan(rows){
+    if (!rows.length) return [];
+    const head = rows[0].map(h => h.trim().toLowerCase());
+    const col = name => head.findIndex(h => h.startsWith(name));
+    const C = { tgl: col('tanggal'), mulai: col('mulai'), selesai: col('selesai'), jur: col('jurusan'), kls: col('kelas'),
+                mapel: col('mapel'), link: col('link'), pin: col('pin'), batas: col('batas') };
+    const out = [];
+    rows.slice(1).forEach((r, i) => {
+      const g = k => C[k] >= 0 ? (r[C[k]] || '').trim() : '';
+      const t = parseTanggal(g('tgl')), a = parseJam(g('mulai')), b = parseJam(g('selesai'));
+      if (!t || !a || !b || !g('link')) return;
+      const start = new Date(t[0], t[1]-1, t[2], a[0], a[1]), end = new Date(t[0], t[1]-1, t[2], b[0], b[1]);
+      const kelas = g('kls').split(/[,;\n]/).map(up).filter(Boolean);
+      out.push({
+        id: [tglKey(start), hhmm(start), up(g('jur')), up(g('mapel')), kelas.join('|')].join('#'),
+        start, end, jurusan: (g('jur') && up(g('jur')) !== 'SEMUA') ? up(g('jur')) : '', kelas: kelas.length ? kelas : ['SEMUA'],
+        mapel: g('mapel') || 'Ujian', link: g('link'), pin: g('pin') || PENGATURAN.PIN_UTAMA,
+        batas: parseInt(g('batas')) || PENGATURAN.BATAS_PELANGGARAN || 3,
+      });
+    });
+    return out.sort((x, y) => x.start - y.start);
+  }
+  function jadwalContoh(){
+    const now = new Date(), t = (min) => new Date(now.getTime() + min * 60000);
+    const besok = new Date(now); besok.setDate(now.getDate() + 1); besok.setHours(7, 30, 0, 0);
+    const besok2 = new Date(besok.getTime() + 120 * 60000);
+    const rnd = d => { d = new Date(d); d.setMinutes(Math.floor(d.getMinutes() / 5) * 5, 0, 0); return d; };
+    const L = 'https://example.com/';
+    const row = (a, b, kls, mapel) => [tglKey(a), hhmm(a), hhmm(b), kls, mapel, L, '1234', '3'];
+    return [['Tanggal','Mulai','Selesai','Kelas','Mapel','Link','PIN','Batas'],
+      row(rnd(t(-30)), rnd(t(90)), 'X TKL', 'Dasar-dasar Teknik Ketenagalistrikan'),
+      row(rnd(t(150)), rnd(t(240)), 'X', 'Bahasa Indonesia'),
+      row(rnd(t(-200)), rnd(t(-110)), 'X TKL A, X TELKA A', 'Matematika'),
+      row(rnd(t(-20)), rnd(t(100)), 'XI TITL A, XI TITL B', 'Instalasi Penerangan Listrik'),
+      row(rnd(t(-10)), rnd(t(110)), 'XI DPIB, XI TKP', 'Gambar Teknik'),
+      row(besok, besok2, 'SEMUA', 'Pendidikan Pancasila'),
+    ];
+  }
+  async function loadJadwal(){
+    const url = sheetToCsvUrl(PENGATURAN.JADWAL_SHEET);
+    let note = '';
+    if (!url) {
+      J = rapikan(jadwalContoh()); jadwalSumber = 'contoh';
+      note = '⚠️ Mode CONTOH: jadwal belum dihubungkan ke Google Sheet sekolah. Data di bawah hanya contoh (PIN 1234).';
+    } else {
+      try {
+        const res = await fetch(url + (url.includes('?') ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error(res.status);
+        const txt = await res.text();
+        if (/^\s*</.test(txt)) throw new Error('bukan CSV');   // halaman login/HTML = sheet belum dibagikan
+        J = rapikan(parseCSV(txt)); jadwalSumber = 'sheet';
+        setLS(KEY_CACHE, { at: Date.now(), txt });
+      } catch(e) {
+        const c = getLS(KEY_CACHE, null);
+        if (c) { J = rapikan(parseCSV(c.txt)); jadwalSumber = 'cache';
+          note = `📶 Tidak bisa memuat jadwal terbaru. Menampilkan jadwal tersimpan (${new Date(c.at).toLocaleString('id-ID')}).`; }
+        else { J = []; jadwalSumber = '';
+          note = '❌ Jadwal gagal dimuat. Periksa internet, atau pastikan Google Sheet sudah dibagikan "Siapa saja yang memiliki link".'; }
+      }
+    }
+    $('demoNote').textContent = note; $('demoNote2').textContent = note;
+    await Promise.all(J.map(async r => { r.pinHash = r.pin ? await hash(r.pin) : ''; }));
+    isiPilihan();
+    if ($('jadwal').classList.contains('active')) renderJadwal();
+  }
+  const daftarKelas = t => (PENGATURAN.DAFTAR_KELAS[t] || []).map(k => up(t + ' ' + k));
+  function isiPilihan(){
+    const sj = $('hJurusan');
+    if (sj.options.length <= 1) {
+      sj.innerHTML = '<option value="">— Pilih tingkat —</option>' + TINGKAT.map(t => `<option value="${esc(t)}">Kelas ${esc(t)}</option>`).join('');
+      if (P.tingkat) sj.value = P.tingkat;
+    }
+    isiKelas();
+    $('hNama').value = $('hNama').value || P.nama || '';
+    $('hAbsen').value = $('hAbsen').value || P.absen || '';
+  }
+  function isiKelas(){
+    const ks = daftarKelas($('hJurusan').value), sk = $('hKelas');
+    sk.innerHTML = $('hJurusan').value
+      ? '<option value="">— Pilih kelas —</option>' + ks.map(k => `<option${k === P.kelas ? ' selected' : ''}>${esc(k)}</option>`).join('')
+      : '<option value="">Pilih tingkat dulu</option>';
+  }
+  $('hJurusan').onchange = isiKelas;
+  $('toSetup').onclick = () => show('setup');
+  $('setupHome').onclick = () => show('home');
+  $('toJadwal').onclick = () => {
+    const tingkat = $('hJurusan').value, kelas = $('hKelas').value, nama = $('hNama').value.trim(), absen = $('hAbsen').value.trim();
+    const err = !tingkat ? 'Pilih tingkat.' : !kelas ? 'Pilih kelas.' : !nama ? 'Nama wajib diisi.' : '';
+    $('homeErr').textContent = err; if (err) return;
+    P = { tingkat, kelas, nama, absen }; setLS(KEY_PROFIL, P);
+    showJadwal();
+  };
+  $('jGanti').onclick = () => { isiPilihan(); show('home'); };
+  $('jRefresh').onclick = () => { $('jList').innerHTML = '<div class="empty"><div class="spin"></div>Memuat jadwal…</div>'; loadJadwal(); };
+  $('testSound2').onclick = () => alarm.test();
+
+  const cocok = r => {
+    const k = up(P.kelas);
+    if (r.jurusan && r.jurusan !== jurusanDari(k)) return false;   // kolom Jurusan (opsional)
+    return r.kelas.some(t => tokenCocok(t, k));
+  };
+  const isDone = id => getLS(KEY_DONE, []).includes(id);
+  function markDone(id){ const d = getLS(KEY_DONE, []); if (!d.includes(id)) { d.push(id); setLS(KEY_DONE, d.slice(-200)); } }
+  function sisa(ms){
+    const m = Math.ceil(ms / 60000);
+    if (m < 60) return m + ' menit';
+    const h = Math.floor(m / 60), r = m % 60; return h + ' jam' + (r ? ' ' + r + ' menit' : '');
+  }
+  function hariLabel(d){
+    const a = new Date(); a.setHours(0,0,0,0); const b = new Date(d); b.setHours(0,0,0,0);
+    const diff = Math.round((b - a) / 86400000);
+    const tgl = `${HARI[d.getDay()]}, ${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+    return diff === 0 ? 'Hari ini · ' + tgl : diff === 1 ? 'Besok · ' + tgl : tgl;
+  }
+  let jTimer = null, jReload = null;
+  function showJadwal(){
+    if (!P.nama || !P.kelas) { show('home'); return; }
+    $('jNama').textContent = P.nama;
+    $('jKelas').textContent = `${P.kelas}${P.absen ? ' · Absen ' + P.absen : ''}`;
+    $('jAvatar').textContent = P.nama.trim()[0].toUpperCase();
+    show('jadwal'); renderJadwal();
+    clearInterval(jTimer); jTimer = setInterval(() => { if ($('jadwal').classList.contains('active')) renderJadwal(); }, 5000);
+    clearInterval(jReload); jReload = setInterval(() => { if ($('jadwal').classList.contains('active')) loadJadwal(); }, 5 * 60000);
+  }
+  function renderJadwal(){
+    const now = Date.now(), awal = new Date(); awal.setHours(0,0,0,0);
+    const batasAkhir = awal.getTime() + 15 * 86400000;
+    const rows = J.filter(cocok).filter(r => r.end.getTime() >= awal.getTime() && r.start.getTime() < batasAkhir);
+    if (!rows.length) {
+      $('jList').innerHTML = `<div class="empty">📭<br>Belum ada jadwal ujian untuk <b>${esc(P.kelas)}</b><br>dalam 2 minggu ke depan.</div>`;
+      return;
+    }
+    let html = '', lastDay = '';
+    rows.forEach(r => {
+      const day = tglKey(r.start);
+      if (day !== lastDay) { html += `<div class="day">${hariLabel(r.start)}</div>`; lastDay = day; }
+      const done = isDone(r.id), live = now >= r.start && now < r.end, past = now >= r.end;
+      const cls = past ? 'past' : live ? 'live' : 'soon';
+      const badge = done ? '<span class="badge done">✓ SUDAH DIKERJAKAN</span>'
+        : live ? '<span class="badge live">● BERLANGSUNG</span>'
+        : past ? '<span class="badge past">SELESAI</span>' : '<span class="badge soon">BELUM DIMULAI</span>';
+      const cd = past ? '' : live ? `Sisa waktu <b>${sisa(r.end - now)}</b>` : `Dimulai dalam <b>${sisa(r.start - now)}</b>`;
+      let btn = '';
+      if (live && !done) btn = `<button class="btn btn-primary" data-start="${esc(r.id)}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Mulai Ujian</button>`;
+      else if (live && done) btn = `<button class="btn btn-ghost" data-start="${esc(r.id)}" data-again="1">Masuk lagi (perlu PIN pengawas)</button>`;
+      else if (!past) btn = `<button class="btn btn-ghost" disabled>Tombol aktif pukul ${hhmm(r.start)}</button>`;
+      html += `<div class="exam-card ${cls}">
+        <div class="top"><h3>${esc(r.mapel)}</h3>${badge}</div>
+        <div class="when">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>${hhmm(r.start)} – ${hhmm(r.end)} WIB</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>Maks. ${r.batas} pelanggaran</span>
+        </div>
+        ${cd ? `<div class="cd">${cd}</div>` : ''}${btn}</div>`;
+    });
+    $('jList').innerHTML = html;
+  }
+  $('jList').addEventListener('click', e => {
+    const b = e.target.closest('[data-start]'); if (!b) return;
+    const r = J.find(x => x.id === b.dataset.start); if (!r) return;
+    if (b.dataset.again) askPin(r, () => mulaiDariJadwal(r)); else mulaiDariJadwal(r);
+  });
+  let pinCb = null, pinRow = null;
+  function askPin(r, cb){
+    pinRow = r; pinCb = cb;
+    $('pinModalInput').value = ''; $('pinModalErr').textContent = '';
+    $('pinModal').classList.add('active'); $('pinModalInput').focus();
+  }
+  $('pinModalCancel').onclick = () => $('pinModal').classList.remove('active');
+  $('pinModalOk').onclick = async () => {
+    if (!pinRow.pinHash || await hash($('pinModalInput').value.trim()) !== pinRow.pinHash) {
+      $('pinModalErr').textContent = 'PIN salah.'; return;
+    }
+    $('pinModal').classList.remove('active'); pinCb && pinCb();
+  };
+  async function mulaiDariJadwal(r){
+    alarm.prime();                                  // harus di dalam sentuhan siswa
+    if (Date.now() >= r.end.getTime()) { toast('Waktu ujian ini sudah habis.'); renderJadwal(); return; }
+    if (!r.pinHash) { toast('PIN pengawas untuk ujian ini belum diisi di jadwal. Lapor ke pengawas.'); return; }
+    let url; try { url = normalizeUrl(r.link); } catch(e){ toast('Link ujian di jadwal tidak valid. Lapor ke pengawas.'); return; }
+    S = { url, pinHash: r.pinHash, max: r.batas, examId: r.id, mapel: r.mapel, endAt: r.end.getTime(),
+          nama: P.nama, kelas: P.kelas + (P.absen ? ' / ' + P.absen : ''),
+          running: true, startedAt: Date.now(), violations: 0, log: [], locked: false, ended: false };
+    save();
+    clearInterval(jTimer);
+    await enterFullscreen();
+    beginExam();
+  }
+
+  /* ---------- mulai ---------- */
+  if (S.running) {
+    // Halaman dimuat ulang saat ujian → dihitung pelanggaran, lanjutkan dalam kondisi terkunci
+    S.violations++; S.log.push({ t: new Date().toLocaleTimeString('id-ID'), r: 'Halaman dimuat ulang / ditutup' });
+    S.locked = true; if (S.violations > S.max) S.ended = true; save();
+    beginExam();
+    // Setelah reload browser belum mengizinkan suara; sirene berbunyi pada sentuhan pertama (lihat pointerdown di atas).
+    alarm.on();
+  } else if (qp && S.url && S.pinHash) {
+    show('student');                       // dibuka dari link/QR pengawas (tanpa jadwal)
+  } else {
+    S = {}; save();
+    show('home');
+  }
+  loadJadwal();
+})();
+</script>
+</body>
+</html>
